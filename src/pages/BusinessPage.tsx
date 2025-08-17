@@ -1,17 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import { 
   Star, 
   Heart, 
   Share, 
-  Camera, 
   PencilSimple, 
   Globe, 
-  BookmarkSimple,
   MapPin,
-  Clock,
-  Phone,
   CaretDown,
   CaretUp,
   MagnifyingGlass,
@@ -231,7 +227,6 @@ const mockPeopleAlsoVisited = [
 ];
 
 function BusinessPage() {
-  const { businessId } = useParams();
   const navigate = useNavigate();
   const [showAllHours, setShowAllHours] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
