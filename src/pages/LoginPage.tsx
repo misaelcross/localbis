@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, EyeSlash } from 'phosphor-react';
 import BottomNav from '../components/BottomNav';
+import Footer from '../components/Footer';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -8,6 +9,10 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -120,6 +125,8 @@ function LoginPage() {
         </div>
       </div>
 
+      <Footer />
+      
       {/* BottomNav fixo */}
       <BottomNav showBottomNav={true} activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>

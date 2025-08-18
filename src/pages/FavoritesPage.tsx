@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MagnifyingGlass, User, Heart } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import SearchModal from '../components/SearchModal';
+import Footer from '../components/Footer';
 
 function FavoritesPage() {
   const [activeTab, setActiveTab] = useState('favorites');
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleLoginClick = () => {
     navigate('/login');
@@ -67,6 +72,8 @@ function FavoritesPage() {
         </div>
       </div>
 
+      <Footer />
+      
       {/* BottomNav */}
       <BottomNav showBottomNav={true} activeTab={activeTab} setActiveTab={setActiveTab} />
       

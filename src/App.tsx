@@ -4,10 +4,14 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
 import SearchModal from './components/SearchModal';
+import Footer from './components/Footer';
 import CategoryPage from './pages/CategoryPage';
+import SearchPage from './pages/SearchPage';
 import LoginPage from './pages/LoginPage';
 import FavoritesPage from './pages/FavoritesPage';
 import BusinessPage from './pages/BusinessPage';
+import AllCategoriesPage from './pages/AllCategoriesPage';
+import RestaurantSubcategoriesPage from './pages/RestaurantSubcategoriesPage';
 import './App.css';
 
 interface Restaurant {
@@ -385,6 +389,11 @@ function HomePage() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [activeTab, setActiveTab] = useState('restaurantes');
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -879,6 +888,8 @@ function HomePage() {
         </div>
       </div>
 
+      <Footer />
+      
       <BottomNav showBottomNav={showBottomNav} activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <SearchModal 
@@ -897,9 +908,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/category/:categorySlug" element={<CategoryPage />} />
+        <Route path="/search/:searchTerm" element={<SearchPage />} />
         <Route path="/login" element={<LoginPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/business/:businessId" element={<BusinessPage />} />
+          <Route path="/all-categories" element={<AllCategoriesPage />} />
+          <Route path="/restaurant-subcategories" element={<RestaurantSubcategoriesPage />} />
       </Routes>
     </Router>
   );

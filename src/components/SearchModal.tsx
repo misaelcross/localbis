@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MagnifyingGlass, X, House, Heart, ShoppingBag, CaretDown, CaretUp } from 'phosphor-react';
+import { Radio, RadioGroup, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -9,6 +11,7 @@ interface SearchModalProps {
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, setActiveTab }) => {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [selectedSchedule, setSelectedSchedule] = useState('todos');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -29,6 +32,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
     setSearchText('');
     setSelectedSchedule('todos');
     setSelectedFilters([]);
+  };
+
+  const handleSearch = () => {
+    if (searchText.trim()) {
+      navigate(`/search/${encodeURIComponent(searchText.trim())}`);
+      onClose();
+    }
   };
 
   const categories = [
@@ -162,25 +172,32 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
           
           {isScheduleOpen && (
             <div className="px-4 pb-4">
-              <div className="space-y-3">
+              <RadioGroup
+                value={selectedSchedule}
+                onChange={(e) => setSelectedSchedule(e.target.value)}
+                sx={{ '& .MuiFormControlLabel-root': { margin: 0, marginBottom: '12px' } }}
+              >
                 {scheduleOptions.map((option) => (
-                  <label key={option.value} className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="schedule"
-                      value={option.value}
-                      checked={selectedSchedule === option.value}
-                      onChange={(e) => setSelectedSchedule(e.target.value)}
-                      className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-gray-800"
-                      style={{
-                        accentColor: selectedSchedule === option.value ? '#1f2937' : '#e5e7eb',
-                        colorScheme: 'light'
-                      }}
-                    />
-                    <span className="text-gray-700">{option.label}</span>
-                  </label>
+                  <FormControlLabel
+                    key={option.value}
+                    value={option.value}
+                    control={
+                      <Radio
+                        sx={{
+                          color: '#9ca3af',
+                          '&.Mui-checked': {
+                            color: '#1f2937',
+                          },
+                          '& .MuiSvgIcon-root': {
+                            fontSize: 20,
+                          },
+                        }}
+                      />
+                    }
+                    label={<span className="text-gray-700 ml-2">{option.label}</span>}
+                  />
                 ))}
-              </div>
+              </RadioGroup>
             </div>
           )}
         </div>
@@ -200,24 +217,29 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
           
           {isFiltersOpen && (
             <div className="px-4 pb-4">
-              <div className="space-y-3">
+              <FormGroup sx={{ '& .MuiFormControlLabel-root': { margin: 0, marginBottom: '12px' } }}>
                 {filterOptions.map((option) => (
-                  <label key={option.value} className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value={option.value}
-                      checked={selectedFilters.includes(option.value)}
-                      onChange={() => handleFilterChange(option.value)}
-                      className="w-4 h-4 border-gray-300 rounded focus:ring-2 focus:ring-gray-800"
-                      style={{
-                        accentColor: selectedFilters.includes(option.value) ? '#1f2937' : '#e5e7eb',
-                        colorScheme: 'light'
-                      }}
-                    />
-                    <span className="text-gray-700">{option.label}</span>
-                  </label>
+                  <FormControlLabel
+                    key={option.value}
+                    control={
+                      <Checkbox
+                        checked={selectedFilters.includes(option.value)}
+                        onChange={() => handleFilterChange(option.value)}
+                        sx={{
+                          color: '#9ca3af',
+                          '&.Mui-checked': {
+                            color: '#1f2937',
+                          },
+                          '& .MuiSvgIcon-root': {
+                            fontSize: 20,
+                          },
+                        }}
+                      />
+                    }
+                    label={<span className="text-gray-700 ml-2">{option.label}</span>}
+                  />
                 ))}
-              </div>
+              </FormGroup>
             </div>
           )}
         </div>
@@ -239,6 +261,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
           </button>
           
           <button
+            onClick={handleSearch}
             disabled={!hasActiveFilters}
             className={`w-1/2 px-6 py-3 rounded-lg font-medium transition-colors ${
               hasActiveFilters

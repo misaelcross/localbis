@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CategoryHeader from '../components/CategoryHeader';
 import CategoryCard from '../components/CategoryCard';
+import Footer from '../components/Footer';
 
 interface Restaurant {
   id: number;
@@ -321,6 +322,8 @@ function CategoryPage() {
           <CategoryCard key={restaurant.id} restaurant={restaurant} />
         ))}
       </div>
+      
+      <Footer />
     </div>
   );
 }

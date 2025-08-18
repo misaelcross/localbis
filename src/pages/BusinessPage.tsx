@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
+import Footer from '../components/Footer';
 import { 
   Star, 
   Heart, 
@@ -241,6 +242,10 @@ function BusinessPage() {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   React.useEffect(() => {
     if (!emblaApi) return;
     onSelect();
@@ -354,26 +359,36 @@ function BusinessPage() {
           </div>
           <span className="text-gray-600">({business.reviewCount} avaliações)</span>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-gray-600">{business.category}</span>
-          <span className="text-gray-600">•</span>
-          <span className="text-gray-600">{business.priceRange}</span>
-          <span className="text-gray-600">•</span>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-            business.isOpen 
-              ? 'bg-green-100 text-green-800' 
-              : 'bg-red-100 text-red-800'
-          }`}>
-            {business.isOpen ? 'Aberto' : 'Fechado'}
-          </span>
+        
+        {/* Características do Negócio */}
+        <div className='mt-4'>
+          <div className="flex flex-wrap gap-2">
+            {['Café especial', 'Brunch', 'Wi-Fi grátis', 'Ambiente aconchegante', 'Opções veganas'].map((characteristic, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+              >
+                {characteristic}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* 3. Localização e Horário */}
       <div className="px-4 py-6 border-b border-gray-100">
-        {/* Mapa placeholder */}
-        <div className="w-full h-32 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-          <MapPin size={32} className="text-gray-400" />
+        {/* Mapa do Google Maps */}
+        <div className="w-full h-48 rounded-lg mb-4 overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975!2d-46.6344!3d-23.5505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59541c6c79c3%3A0x36b90a85f0f8cb33!2sRua%20das%20Flores%2C%20123%20-%20Centro%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt!2sbr!4v1640995200000!5m2!1spt!2sbr"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Localização do Café da Esquina"
+          />
         </div>
         
         <div className="mb-4">
@@ -383,26 +398,60 @@ function BusinessPage() {
 
         <div className="mb-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold text-gray-900">Horário de funcionamento</h3>
+            <div className="flex items-center space-x-2">
+              {!showAllHours ? (
+                <>
+                  <span className={`font-medium ${
+                    business.isOpen ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {business.isOpen ? 'Aberto Agora' : 'Fechado'}
+                  </span>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-gray-600 text-sm">
+                    {business.isOpen ? 'Fecha às 18:00' : 'Abre às 7:00'}
+                  </span>
+                </>
+              ) : (
+                <span className={`font-medium ${
+                  business.isOpen ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {business.isOpen ? 'Aberto Agora' : 'Fechado'}
+                </span>
+              )}
+            </div>
             <button 
               onClick={() => setShowAllHours(!showAllHours)}
-              className="text-gray-900 underline"
+              className="text-gray-900"
             >
               {showAllHours ? <CaretUp size={20} /> : <CaretDown size={20} />}
             </button>
           </div>
           
-          <div className="space-y-2">
-            {Object.entries(business.hours)
-              .slice(0, showAllHours ? undefined : 3)
-              .map(([day, hours]) => (
-                <div key={day} className="flex justify-between">
-                  <span className="text-gray-700">{day}</span>
-                  <span className="text-gray-900 font-medium">{hours}</span>
-                </div>
-              ))
-            }
-          </div>
+          {showAllHours && (
+            <div className="space-y-2">
+              {(() => {
+                const today = new Date().getDay();
+                const daysOrder = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+                const currentDay = daysOrder[today];
+                
+                return daysOrder.map((day) => (
+                  <div key={day} className="flex justify-between">
+                    <span className={`${
+                      day === currentDay ? 'text-gray-900 font-bold' : 'text-gray-700'
+                    }`}>
+                      {day}
+                    </span>
+                    <span className={`font-medium ${
+                      day === currentDay ? 'text-gray-900 font-bold' : 'text-gray-900'
+                    }`}>
+                      {business.hours[day] || 'Fechado'}
+                    </span>
+                  </div>
+                ));
+              })()
+              }
+            </div>
+          )}
         </div>
 
         <button className="text-gray-900 font-medium underline">Sugerir edição</button>
@@ -593,6 +642,8 @@ function BusinessPage() {
           ))}
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }
