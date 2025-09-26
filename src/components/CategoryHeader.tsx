@@ -14,15 +14,6 @@ function CategoryHeader({ categoryTitle }: { categoryTitle: string }) {
   return (
     <div className="bg-white shadow-sm">
       <div className="px-4 py-3 flex flex-col items-center justify-between w-full">
-        <div className="w-full flex items-center justify-between pb-4 md:pb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Local Top</h1>
-          
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-600">
-              <User size={20} />
-            </button>
-          </div>
-        </div>
         
         {/* Título e descrição da categoria com ícones */}
         <div className="w-full flex items-center space-x-3 mb-0 md:mb-6 max-w-[500px] min-w-0">

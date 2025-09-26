@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MagnifyingGlass, User, House, Heart, ShoppingBag } from 'phosphor-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   activeTab: string;
@@ -9,6 +10,7 @@ interface HeaderProps {
 
 function Header({ activeTab, setActiveTab, onSearchClick }: HeaderProps) {
   const [showIcons, setShowIcons] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,8 +65,11 @@ function Header({ activeTab, setActiveTab, onSearchClick }: HeaderProps) {
           </div>
           
           <div className="flex items-center space-x-4">
-            <button className="text-gray-600">
-              <User size={20} />
+            <button 
+              onClick={() => navigate('/dashboard')}
+              className="text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <User size={24} />
             </button>
           </div>
         </div>

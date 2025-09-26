@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { ArrowLeft } from 'phosphor-react';
+import Navbar from '../components/Navbar';
 
 interface Subcategory {
   id: number;
@@ -66,18 +67,14 @@ function RestaurantSubcategoriesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header com botão voltar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
-        <div className="px-4 py-3 flex items-center">
-          <button 
-            onClick={() => navigate(-1)}
-            className="text-gray-900 mr-4"
-          >
-            <ArrowLeft size={24} />
-          </button>
-          <h1 className="text-lg font-semibold text-gray-900">Restaurantes</h1>
-        </div>
-      </div>
+      {/* Navbar */}
+      <Navbar 
+        variant="page"
+        title="Restaurantes"
+        showBackButton={true}
+        showSearch={false}
+        showUserIcon={true}
+      />
 
       {/* Conteúdo principal */}
       <div className="pt-16 pb-20">

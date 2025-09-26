@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MagnifyingGlass, X, House, Heart, ShoppingBag, CaretDown, CaretUp } from 'phosphor-react';
+import { MagnifyingGlass, X, House, Heart, ShoppingBag, CaretDown, CaretUp, Star, MapPin } from 'phosphor-react';
 import { Radio, RadioGroup, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
 
 interface SearchModalProps {
@@ -41,6 +41,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const categories = [
     { name: 'Restaurantes', icon: '🍽️' },
     { name: 'Farmácias', icon: '💊' },
@@ -48,6 +54,43 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
     { name: 'Padarias', icon: '🥖' },
     { name: 'Vestuário', icon: '👕' },
     { name: 'Esportes', icon: '⚽' }
+  ];
+
+  // Mock data para os 3 negócios sugeridos
+  const suggestedBusinesses = [
+    {
+      id: 1,
+      name: 'Café da Esquina',
+      rating: 4.8,
+      reviewCount: 122,
+      image: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+      isOpen: true,
+      address: 'Rua Augusta, 1200 - São Paulo, SP',
+      category: 'Café',
+      closingTime: '18:00'
+    },
+    {
+      id: 2,
+      name: 'Restaurante Bella Vista',
+      rating: 4.6,
+      reviewCount: 89,
+      image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+      isOpen: true,
+      address: 'Av. Paulista, 2000 - São Paulo, SP',
+      category: 'Italiana',
+      closingTime: '22:00'
+    },
+    {
+      id: 3,
+      name: 'Padaria Central',
+      rating: 4.5,
+      reviewCount: 156,
+      image: 'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+      isOpen: false,
+      address: 'Rua do Comércio, 100 - São Paulo, SP',
+      category: 'Padaria',
+      openingTime: '6:00'
+    }
   ];
 
   const scheduleOptions = [
@@ -136,22 +179,70 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
               placeholder="Buscar cidade, bairro ou endereço"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
             />
           </div>
 
-          {/* Sugestões de categorias */}
+          {/* Sugestões de negócios */}
           <div className="mb-1">
-            <h3 className="text-sm font-medium text-gray-700 mb-1">Locais sugeridos:</h3>
-            <div className="space-y-1">
-              {categories.map((category, index) => (
-                <button
-                  key={index}
-                  className="flex items-center space-x-3 w-full py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            <h3 className="text-sm font-medium text-gray-700 mb-3">Locais sugeridos:</h3>
+            <div className="space-y-3">
+              {suggestedBusinesses.map((business) => (
+                <div
+                  key={business.id}
+                  className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/business/${business.id}`)}
                 >
-                  <span className="text-2xl">{category.icon}</span>
-                  <span className="text-gray-700">{category.name}</span>
-                </button>
+                  {/* Foto do negócio à esquerda */}
+                  <img 
+                    src={business.image} 
+                    alt={business.name}
+                    className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                  />
+                  
+                  {/* Informações à direita */}
+                  <div className="flex-1 min-w-0">
+                    {/* Nome do negócio */}
+                    <h4 className="font-medium text-gray-900 mb-1 truncate">
+                      {business.name}
+                    </h4>
+                    
+                    {/* Avaliações */}
+                    <div className="flex items-center mb-2">
+                      <Star size={14} className="text-yellow-500 mr-1" weight="fill" />
+                      <span className="text-sm text-gray-900 mr-1">{business.rating}</span>
+                      <span className="text-sm text-gray-500">({business.reviewCount})</span>
+                    </div>
+                    
+                    {/* Categoria em badge cinza e endereço */}
+                    <div className="flex items-center mb-2">
+                      <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium mr-2 flex-shrink-0">
+                        {business.category}
+                      </span>
+                      <div className="flex items-center text-gray-600 min-w-0">
+                        <MapPin size={12} className="mr-1 flex-shrink-0" />
+                        <span className="text-xs truncate">{business.address}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Status de aberto/fechado com horários */}
+                    <div className="flex items-center">
+                      <span className={`text-xs font-medium mr-1 ${
+                        business.isOpen ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {business.isOpen ? 'Aberto' : 'Fechado'}
+                      </span>
+                      <span className="text-gray-400 text-xs">•</span>
+                      <span className="text-xs text-gray-600 ml-1">
+                        {business.isOpen 
+                          ? `Fecha às ${business.closingTime}` 
+                          : `Abre às ${business.openingTime}`
+                        }
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

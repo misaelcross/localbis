@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import { 
   ArrowLeft,
   Hamburger,
@@ -92,21 +93,17 @@ function AllCategoriesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header com botão voltar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
-        <div className="px-4 py-3 flex items-center">
-          <button 
-            onClick={() => navigate(-1)}
-            className="text-gray-900 mr-4"
-          >
-            <ArrowLeft size={24} />
-          </button>
-          <h1 className="text-lg font-semibold text-gray-900">Todas as Categorias</h1>
-        </div>
-      </div>
+      {/* Navbar */}
+      <Navbar 
+        variant="page"
+        title="Todas as Categorias"
+        showBackButton={true}
+        showSearch={false}
+        showUserIcon={true}
+      />
 
       {/* Conteúdo principal */}
-      <div className="pt-10 pb-20">
+      <div className="pt-16 pb-20">
         <div className="px-4 py-6">          
           {/* Lista de categorias */}
           <div className="space-y-3">
@@ -114,7 +111,7 @@ function AllCategoriesPage() {
               <div
                 key={category.id}
                 onClick={() => handleCategoryClick(category.route)}
-                className="bg-white rounded-lg p-4 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-shadow duration-200 active:scale-95 transform transition-transform"
+                className="bg-white rounded-lg p-4 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-all duration-200 active:scale-95 transform"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
@@ -125,11 +122,12 @@ function AllCategoriesPage() {
                       <h3 className="text-base font-medium text-gray-900">
                         {category.name}
                       </h3>
+                      <p className="text-sm text-gray-500 mt-1">
+                        {category.description}
+                      </p>
                     </div>
                   </div>
-                  <div className="flex-shrink-0">
-                    <CaretRight size={20} className="text-gray-400" />
-                  </div>
+                  <ArrowLeft size={20} className="text-gray-400 transform rotate-180" />
                 </div>
               </div>
             ))}

@@ -7,11 +7,19 @@ import SearchModal from './components/SearchModal';
 import Footer from './components/Footer';
 import CategoryPage from './pages/CategoryPage';
 import SearchPage from './pages/SearchPage';
+import JobsPage from './pages/JobsPage';
+import JobDetailPage from './pages/JobDetailPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
 import FavoritesPage from './pages/FavoritesPage';
 import BusinessPage from './pages/BusinessPage';
 import AllCategoriesPage from './pages/AllCategoriesPage';
 import RestaurantSubcategoriesPage from './pages/RestaurantSubcategoriesPage';
+import DashboardPage from './pages/DashboardPage';
+import NotificationsPage from './pages/NotificationsPage';
+import NotFoundPage from './pages/NotFoundPage';
+import BusinessRegistrationPage from './pages/BusinessRegistrationPage';
 import './App.css';
 
 interface Restaurant {
@@ -909,11 +917,19 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/category/:categorySlug" element={<CategoryPage />} />
         <Route path="/search/:searchTerm" element={<SearchPage />} />
+        <Route path="/jobs" element={<JobsPage />} />
+        <Route path="/job/:jobId" element={<JobDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/business/:businessId" element={<BusinessPage />} />
           <Route path="/all-categories" element={<AllCategoriesPage />} />
           <Route path="/restaurant-subcategories" element={<RestaurantSubcategoriesPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+                <Route path="/register-business" element={<BusinessRegistrationPage />} />
+                <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
