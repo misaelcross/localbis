@@ -47,15 +47,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, activeTab, s
     }
   };
 
-  const categories = [
-    { name: 'Restaurantes', icon: '🍽️' },
-    { name: 'Farmácias', icon: '💊' },
-    { name: 'Supermercados', icon: '🛒' },
-    { name: 'Padarias', icon: '🥖' },
-    { name: 'Vestuário', icon: '👕' },
-    { name: 'Esportes', icon: '⚽' }
-  ];
-
   // Mock data para os 3 negócios sugeridos
   const suggestedBusinesses = [
     {

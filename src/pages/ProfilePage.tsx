@@ -3,25 +3,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   User,
   Bell,
-  Shield,
   Heart,
-  Star,
   MapPin,
   Phone,
   Envelope,
   Camera,
-  ArrowLeft,
   CaretRight,
   Eye,
-  Globe,
   Moon,
   Trash,
   SignOut,
-  X,
   CalendarBlank
 } from 'phosphor-react';
-import BottomNav from '../components/BottomNav';
-import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 interface UserProfile {
@@ -317,8 +310,6 @@ function ProfilePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<'profile' | 'settings'>('profile');
-  const [showIcons, setShowIcons] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingField, setEditingField] = useState<string>('');
   const [editValue, setEditValue] = useState<string>('');
   const [userProfile, setUserProfile] = useState(mockUserProfile);
@@ -350,34 +341,8 @@ function ProfilePage() {
   const handleEditField = (field: string, currentValue: string) => {
     setEditingField(field);
     setEditValue(currentValue);
-    setIsModalOpen(true);
+    // Modal functionality would be implemented here
   };
-
-  const handleSaveEdit = () => {
-    setUserProfile(prev => ({
-      ...prev,
-      [editingField]: editValue
-    }));
-    setIsModalOpen(false);
-    setEditingField('');
-    setEditValue('');
-  };
-
-  const handleCancelEdit = () => {
-    setIsModalOpen(false);
-    setEditingField('');
-    setEditValue('');
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY > 100;
-      setShowIcons(!scrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <div className="min-h-screen bg-white">

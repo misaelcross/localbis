@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { 
-  ArrowLeft,
   Hamburger,
   ShoppingBag,
   Pill,
@@ -127,7 +126,7 @@ function AllCategoriesPage() {
                       </p>
                     </div>
                   </div>
-                  <ArrowLeft size={20} className="text-gray-400 transform rotate-180" />
+                  <CaretRight size={20} className="text-gray-400" />
                 </div>
               </div>
             ))}

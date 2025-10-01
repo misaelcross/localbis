@@ -41,16 +41,6 @@ function Navbar({
     navigate('/');
   };
 
-  // Função para navegar para favoritos no dashboard
-  const handleFavoritesClick = () => {
-    navigate('/dashboard?tab=favorites');
-  };
-
-  // Função para navegar para configurações no profile
-  const handleSettingsClick = () => {
-    navigate('/profile?tab=settings');
-  };
-
   return (
     <div className={`fixed top-0 left-0 right-0 z-50 bg-white shadow-sm ${className}`}>
       <div className="px-4 py-3 flex items-center justify-between w-full">

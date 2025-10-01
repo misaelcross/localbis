@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Heart, User } from 'phosphor-react';
+import { ArrowLeft, Heart } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 
 
