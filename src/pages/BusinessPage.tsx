@@ -5,15 +5,12 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { 
   Star, 
-  Heart, 
   Share, 
   PencilSimple, 
   Globe, 
   MapPin,
   CaretDown,
   CaretUp,
-  MagnifyingGlass,
-  ArrowLeft,
   WifiHigh,
   CreditCard,
   Car,
@@ -235,7 +232,6 @@ function BusinessPage() {
   const navigate = useNavigate();
   const [showAllHours, setShowAllHours] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [showAllAmenities, setShowAllAmenities] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -281,24 +277,7 @@ function BusinessPage() {
     ));
   };
 
-  const getAmenityIcon = (amenity: string) => {
-    switch (amenity.toLowerCase()) {
-      case 'wi-fi gratuito':
-        return <WifiHigh size={20} />;
-      case 'aceita cartão':
-        return <CreditCard size={20} />;
-      case 'estacionamento':
-        return <Car size={20} />;
-      case 'acessível':
-        return <Wheelchair size={20} />;
-      case 'pet friendly':
-        return <Dog size={20} />;
-      case 'área kids':
-        return <Baby size={20} />;
-      default:
-        return <Star size={20} />;
-    }
-  };
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({

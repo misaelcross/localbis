@@ -4,13 +4,10 @@ import {
   Bell, 
   Check, 
   X, 
-  Trash, 
   Star, 
   Heart, 
-  Storefront, 
   Clock,
   CheckCircle,
-  Info,
   Warning,
   Gift,
   DotsThreeVertical,
@@ -87,7 +84,6 @@ function NotificationsPage() {
     ? notifications.filter(n => !n.read)
     : notifications;
 
-  // Fechar dropdown ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
@@ -100,24 +96,10 @@ function NotificationsPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [showDropdown]);
 
-  const markAsRead = (id: string) => {
-    setNotifications(prev => 
-      prev.map(notification => 
-        notification.id === id 
-          ? { ...notification, read: true }
-          : notification
-      )
-    );
-  };
-
   const markAllAsRead = () => {
     setNotifications(prev => 
       prev.map(notification => ({ ...notification, read: true }))
     );
-  };
-
-  const deleteNotification = (id: string) => {
-    setNotifications(prev => prev.filter(notification => notification.id !== id));
   };
 
   const getNotificationBg = (type: string, read: boolean) => {

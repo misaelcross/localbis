@@ -310,9 +310,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<'profile' | 'settings'>('profile');
-  const [editingField, setEditingField] = useState<string>('');
-  const [editValue, setEditValue] = useState<string>('');
-  const [userProfile, setUserProfile] = useState(mockUserProfile);
+  const [userProfile] = useState(mockUserProfile);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [privacySettings, setPrivacySettings] = useState({
     profileVisible: true,
@@ -339,9 +337,8 @@ function ProfilePage() {
   };
 
   const handleEditField = (field: string, currentValue: string) => {
-    setEditingField(field);
-    setEditValue(currentValue);
     // Modal functionality would be implemented here
+    console.log(`Editing ${field} with value: ${currentValue}`);
   };
 
   return (
