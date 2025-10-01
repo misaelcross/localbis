@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { 
@@ -8,7 +8,6 @@ import {
   MapPin,
   ArrowLeft,
   Clock,
-  Money,
   Users,
   GraduationCap,
   Briefcase
@@ -146,27 +145,6 @@ function JobDetailPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        size={16}
-        weight={i < Math.floor(rating) ? 'fill' : 'regular'}
-        className="text-yellow-400"
-      />
-    ));
-  };
-
-  const getBenefitIcon = (benefit: string) => {
-    const lowerBenefit = benefit.toLowerCase();
-    if (lowerBenefit.includes('saúde')) return <Heart size={16} className="text-neutral-600" />;
-    if (lowerBenefit.includes('refeição') || lowerBenefit.includes('alimentação')) return <Users size={16} className="text-neutral-600" />;
-    if (lowerBenefit.includes('transporte')) return <MapPin size={16} className="text-neutral-600" />;
-    if (lowerBenefit.includes('educação') || lowerBenefit.includes('curso')) return <GraduationCap size={16} className="text-neutral-600" />;
-    if (lowerBenefit.includes('home office') || lowerBenefit.includes('flexível')) return <Clock size={16} className="text-neutral-600" />;
-    return <Star size={16} className="text-gray-500" />;
-  };
 
   return (
     <div className="min-h-screen bg-white">

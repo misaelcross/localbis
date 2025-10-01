@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MagnifyingGlass, User, Heart } from 'phosphor-react';
+import { Heart } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import SearchModal from '../components/SearchModal';
