@@ -4,14 +4,8 @@ import {
   ArrowLeft,
   Storefront,
   MapPin,
-  Phone,
-  Envelope,
-  Globe,
   Clock,
-  Camera,
-  Plus,
-  X,
-  Star
+  Camera
 } from 'phosphor-react';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -233,30 +227,7 @@ function BusinessRegistrationPage() {
     }
   };
 
-  const formatTime24h = (time: string): string => {
-    if (!time) return '';
-    
-    // Se já está no formato HH:MM, retorna como está
-    if (/^\d{2}:\d{2}$/.test(time)) {
-      return time;
-    }
-    
-    // Remove caracteres não numéricos
-    const numericTime = time.replace(/\D/g, '');
-    
-    if (numericTime.length >= 3) {
-      const hours = numericTime.slice(0, 2);
-      const minutes = numericTime.slice(2, 4);
-      
-      // Valida horas (00-23) e minutos (00-59)
-      const validHours = Math.min(23, Math.max(0, parseInt(hours) || 0));
-      const validMinutes = Math.min(59, Math.max(0, parseInt(minutes) || 0));
-      
-      return `${validHours.toString().padStart(2, '0')}:${validMinutes.toString().padStart(2, '0')}`;
-    }
-    
-    return time;
-  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

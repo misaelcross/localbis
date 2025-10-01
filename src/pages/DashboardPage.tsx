@@ -4,11 +4,9 @@ import {
   Star, 
   Heart, 
   Bell,
-  User,
   Clock,
   MapPin,
   MagnifyingGlass,
-  Eye,
   CaretDown,
   UserCircle,
   Gear,
@@ -16,7 +14,7 @@ import {
   ClockCounterClockwise,
   SignOut
 } from 'phosphor-react';
-import Navbar from '../components/Navbar';
+
 
 interface Business {
   id: number;
@@ -143,7 +141,6 @@ function DashboardPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<'favorites' | 'reviews' | 'history'>('favorites');
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [showIcons, setShowIcons] = useState(true);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -185,16 +182,7 @@ function DashboardPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star
-        key={index}
-        size={16}
-        weight={index < Math.floor(rating) ? 'fill' : 'regular'}
-        className={index < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}
-      />
-    ));
-  };
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -586,7 +574,7 @@ function DashboardPage() {
           
           {/* Search Bar */}
           <button 
-            onClick={() => setIsSearchModalOpen(true)}
+            onClick={() => console.log('Search clicked')}
             className="w-full flex items-center justify-center space-x-2 bg-white border border-neutral-200 rounded-full px-4 py-3 shadow-xl text-gray-500 mb-0 md:mb-6 max-w-[500px] hover:bg-gray-50 transition-colors"
           >
             <MagnifyingGlass size={20} />
